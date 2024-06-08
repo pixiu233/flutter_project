@@ -26,7 +26,9 @@ class MyApp extends StatelessWidget {
           title: 'First Method',
           // You can use the library anywhere in the app even in theme
           theme: ThemeData(
-              primarySwatch: Colors.blue,
+              primaryColor: Color.fromRGBO(253, 41, 123, 1.0),
+              secondaryHeaderColor: Color.fromRGBO(255, 88, 100, 1.0),
+              hintColor: Color.fromRGBO(255, 101, 91, 1.0),
               textTheme: Typography.englishLike2018.apply(
                 fontSizeFactor: 1.0, // 或者直接使用1，这里保持默认大小不变
                 bodyColor: Colors.black, // 改变正文文本颜色为红色
@@ -38,9 +40,9 @@ class MyApp extends StatelessWidget {
                 // 自定义AppBar样式
                 color: Colors.white, // 设置AppBar的背景颜色，这里使用灰色作为示例
               )),
-          onGenerateRoute: Routes.generatedRoute,
-          initialRoute: RoutePath.home,
-          home: const HomePage(),
+          onGenerateRoute: Routes.generateRoute,
+          initialRoute: RoutePath.login,
+          // home: const HomePage(),
         );
       },
     );

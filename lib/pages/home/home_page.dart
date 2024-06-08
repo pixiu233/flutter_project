@@ -97,7 +97,7 @@ class _HomePageState extends State<HomePage> {
   Widget _listItemView() {
     return GestureDetector(
         onTap: () {
-          Navigator.pushNamed(context, RoutePath.webViewPage);
+          Navigator.pushNamed(context, RoutePath.web_view);
         },
         child: _buildListItemContent());
   }
@@ -136,8 +136,8 @@ class _HomePageState extends State<HomePage> {
 
   Widget _clipRRectImage() => ClipRRect(
         borderRadius: BorderRadius.circular(borderRadiusValue),
-        child: Image.asset(
-          "assets/images/cat.png",
+        child: Image.network(
+          "http://116.205.181.242:8888/down/XOL31PGDjfWz.png",
           width: imageWidthHeight,
           height: imageWidthHeight,
         ),
