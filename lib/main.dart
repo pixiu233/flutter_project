@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/http/dio_instance.dart';
-import 'package:flutter_application_1/pages/home/home_page.dart';
 import 'package:flutter_application_1/pages/route/routes.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+final GlobalKey<NavigatorState> globalNavigatorKey = GlobalKey();
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   DioInstance.instance().initDio(baseUrl: "http://192.168.3.93:3000/v1/");
   runApp(const MyApp());
 }
@@ -24,7 +25,6 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'First Method',
-          // You can use the library anywhere in the app even in theme
           theme: ThemeData(
               primaryColor: Color.fromRGBO(253, 41, 123, 1.0),
               secondaryHeaderColor: Color.fromRGBO(255, 88, 100, 1.0),
@@ -41,7 +41,8 @@ class MyApp extends StatelessWidget {
                 color: Colors.white, // 设置AppBar的背景颜色，这里使用灰色作为示例
               )),
           onGenerateRoute: Routes.generateRoute,
-          initialRoute: RoutePath.login,
+          navigatorKey: globalNavigatorKey,
+          initialRoute: RoutePath.tab,
           // home: const HomePage(),
         );
       },

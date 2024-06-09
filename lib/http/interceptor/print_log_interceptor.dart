@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_application_1/main.dart';
 
 ///网络请求与返回信息打印拦截器
 class PrintLogInterceptor extends InterceptorsWrapper {
@@ -33,9 +35,16 @@ class PrintLogInterceptor extends InterceptorsWrapper {
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
+    super.onError(err, handler);
     log("\nonError-------------->");
     log("error:${err.toString()}");
     log("<--------------onError\n");
-    super.onError(err, handler);
+    int? statusCode = err.response?.statusCode;
+    if (statusCode == 401) {
+      // 跳转登录页面并清空栈
+      print('状态码：401');
+      globalNavigatorKey.currentState
+          ?.pushNamedAndRemoveUntil('/login', (route) => false);
+    }
   }
 }

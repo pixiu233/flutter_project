@@ -6,13 +6,16 @@ part 'login.g.dart';
 
 @JsonSerializable()
 class Login {
-	num? code;
-	String? message;
-	Data? data;
+  num? code;
+  String? message;
+  Data? data;
 
-	Login({this.code, this.message, this.data});
+  Login({this.code, this.message, this.data});
 
-	factory Login.fromJson(Map<String, dynamic> json) => _$LoginFromJson(json);
+  @override
+  String toString() => 'Login(code: $code, message: $message, data: $data)';
 
-	Map<String, dynamic> toJson() => _$LoginToJson(this);
+  factory Login.fromJson(Map<String, dynamic> json) => _$LoginFromJson(json);
+
+  Map<String, dynamic> toJson() => _$LoginToJson(this);
 }

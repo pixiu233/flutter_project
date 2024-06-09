@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/apis/login_vm.dart';
+import 'package:flutter_application_1/datas/login/data.dart';
 import 'package:flutter_application_1/pages/route/RouteUtils.dart';
 import 'package:flutter_application_1/pages/route/routes.dart';
 import 'package:flutter_application_1/pages/tab_page.dart';
 import 'package:flutter_application_1/pages/tinder/tinder_page.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 // import 'package:tinder_clone/Models/tinder_clone_icons.dart';
 // import 'package:tinder_clone/Screens/PhoneNumber.dart';
 
@@ -18,6 +21,12 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
+
+  Future<void> _saveToken(String? token) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('token', token ?? '');
+    print('Token saved successfully');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,10 +97,10 @@ class _LoginScreenState extends State<LoginScreen> {
                             final username = 'songsikai'; // 从界面上获取的实际用户名
                             final password = '123456'; // 从界面上获取的实际密码
 
-                            final loginResult =
+                            Data loginResult =
                                 await LoginModel.login(username, password);
-                            print('返回的数据$loginResult');
-                            if (loginResult.code == 200) {
+                            if (loginResult != null) {
+                              await _saveToken(loginResult.token);
                               RouteUtils.pushAndRemoveUntil(context, TabPage());
                             }
                           },

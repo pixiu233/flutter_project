@@ -122,11 +122,14 @@ class _TinderSwipPageState extends State<TinderSwip> {
   Future<void> _shakeCard() async {
     const double distance = 30;
     // We can animate back and forth by chaining different animations.
-    await controller.animateTo(
-      const Offset(-distance, 0),
-      duration: const Duration(milliseconds: 200),
-      curve: Curves.easeInOut,
-    );
+    try {
+      await controller.animateTo(
+        const Offset(-distance, 0),
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.easeInOut,
+      );
+    } catch (e) {}
+
     await controller.animateTo(
       const Offset(distance, 0),
       duration: const Duration(milliseconds: 400),

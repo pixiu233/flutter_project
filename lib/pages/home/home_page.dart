@@ -41,19 +41,19 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    initBannerData();
+    // initBannerData();
   }
 
-  void initBannerData() async {
-    try {
-      List<Datum>? bannerListData = await HomeViewModel.getBanner();
-      setState(() {
-        bannerList = bannerListData; // 更新状态
-      });
-    } on DioError catch (e) {
-      print('Error fetching banners: $e');
-    }
-  }
+  // void initBannerData() async {
+  //   try {
+  //     List<Datum>? bannerListData = await HomeViewModel.getBanner();
+  //     setState(() {
+  //       bannerList = bannerListData; // 更新状态
+  //     });
+  //   } on DioError catch (e) {
+  //     print('Error fetching banners: $e');
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {

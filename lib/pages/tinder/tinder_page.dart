@@ -28,7 +28,6 @@ class _TinderPageState extends State<TinderPage> {
     try {
       List<Datum>? tinderUsersListData =
           await TinderUsersModel.getTinderUsers();
-
       setState(() {
         dataList = tinderUsersListData; // 更新状态
       });
@@ -44,9 +43,11 @@ class _TinderPageState extends State<TinderPage> {
         child: CupertinoPageScaffold(
           child: SizedBox(
               height: MediaQuery.of(context).size.height * 0.75,
-              child: TinderSwip(
-                candidates: dataList,
-              )),
+              child: dataList!.length > 0
+                  ? TinderSwip(
+                      candidates: dataList,
+                    )
+                  : SizedBox()),
         ),
       ),
     );

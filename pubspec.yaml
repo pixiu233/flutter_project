@@ -44,6 +44,7 @@ dependencies:
   freezed_annotation: ^2.4.1
   appinio_swiper: ^2.1.1
   shared_preferences: ^2.0.7
+  rxdart: ^0.27.5
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_application_1/http/interceptor/print_log_interceptor.dart';
 import 'package:flutter_application_1/http/interceptor/rsp_interceptor.dart';
 import 'package:flutter_application_1/http/interceptor/token_interceptor.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'http_method.dart';
 
@@ -19,6 +20,10 @@ class DioInstance {
   Dio _dio = Dio();
   final _defaultTimeout = const Duration(seconds: 30);
   var _inited = false;
+  Future<String?> getToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('token'); // 直接返回token，可能是null
+  }
 
   void initDio({
     required String baseUrl,
@@ -37,16 +42,9 @@ class DioInstance {
         sendTimeout: sendTimeout ?? _defaultTimeout,
         responseType: responseType,
         contentType: contentType);
-    String token = "your_token_here";
 
-    // 实例化并添加Token拦截器
-    TokenInterceptor tokenInterceptor = TokenInterceptor(token);
-    // _dio.interceptors.add(CookieInterceptor());
-    // final cookieJar = CookieJar();
-    // _dio.interceptors.add(CookieManager(cookieJar));
     _dio.interceptors.add(PrintLogInterceptor());
-    _dio.interceptors.add(RspInterceptor());
-    _dio.interceptors.add(tokenInterceptor);
+    // _dio.interceptors.add(RspInterceptor());
 
     _inited = true;
   }
@@ -61,6 +59,11 @@ class DioInstance {
     if (!_inited) {
       throw Exception("you should call initDio() first!");
     }
+    final token = await getToken();
+    // 实例化并添加Token拦截器
+    TokenInterceptor tokenInterceptor = TokenInterceptor(token);
+    _dio.interceptors.add(tokenInterceptor);
+
     return await _dio.get(path,
         queryParameters: param,
         options: options ??
@@ -82,6 +85,10 @@ class DioInstance {
     if (!_inited) {
       throw Exception("you should call initDio() first!");
     }
+    final token = await getToken();
+    // 实例化并添加Token拦截器
+    TokenInterceptor tokenInterceptor = TokenInterceptor(token);
+    _dio.interceptors.add(tokenInterceptor);
     return await _dio.post(path,
         data: data,
         queryParameters: queryParameters,

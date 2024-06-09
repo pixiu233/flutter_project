@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_application_1/datas/login/data.dart';
 import 'package:flutter_application_1/datas/login/login.dart';
 import 'package:flutter_application_1/http/dio_instance.dart';
 
@@ -13,12 +14,9 @@ class LoginModel {
     Response response =
         await DioInstance.instance().post(path: "/auth/login", data: data);
 
-    // 假设服务器返回的是类似 {"status": "success", "data": {token: "..."}} 的格式
-    Map<String, dynamic> responseData = response.data;
-    print(responseData);
+    Login responseData = Login.fromJson(response.data);
     if (responseData != null) {
-      // 登录成功，通常会返回一个Token或其他认证信息
-      return responseData;
+      return responseData.data;
     }
   }
 }
