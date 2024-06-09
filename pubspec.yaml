@@ -42,7 +42,8 @@ dependencies:
   collection: ^1.18.0
   json_annotation: ^4.9.0
   freezed_annotation: ^2.4.1
-
+  appinio_swiper: ^2.1.1
+  shared_preferences: ^2.0.7
 dev_dependencies:
   flutter_test:
     sdk: flutter

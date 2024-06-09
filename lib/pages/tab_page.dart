@@ -5,6 +5,7 @@ import 'package:flutter_application_1/pages/chat/chat_page.dart';
 import 'package:flutter_application_1/pages/find/find_page.dart';
 import 'package:flutter_application_1/pages/home/home_page.dart';
 import 'package:flutter_application_1/pages/me/me_page.dart';
+import 'package:flutter_application_1/pages/tinder/tinder_page.dart';
 
 class TabPage extends StatefulWidget {
   const TabPage({super.key});
@@ -40,9 +41,9 @@ class _TabPageState extends State<TabPage> {
   }
 
   void initTabPage() {
+    tabItems.add(const TinderPage());
     tabItems.add(const HomePage());
     tabItems.add(const ChatPage());
-    tabItems.add(const FindPage());
     tabItems.add(const MePage());
   }
 

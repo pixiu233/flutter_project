@@ -1,6 +1,9 @@
 import 'dart:collection';
 
 import 'package:dio/dio.dart';
+import 'package:flutter_application_1/http/interceptor/print_log_interceptor.dart';
+import 'package:flutter_application_1/http/interceptor/rsp_interceptor.dart';
+import 'package:flutter_application_1/http/interceptor/token_interceptor.dart';
 
 import 'http_method.dart';
 
@@ -34,11 +37,16 @@ class DioInstance {
         sendTimeout: sendTimeout ?? _defaultTimeout,
         responseType: responseType,
         contentType: contentType);
+    String token = "your_token_here";
+
+    // 实例化并添加Token拦截器
+    TokenInterceptor tokenInterceptor = TokenInterceptor(token);
     // _dio.interceptors.add(CookieInterceptor());
     // final cookieJar = CookieJar();
     // _dio.interceptors.add(CookieManager(cookieJar));
-    // _dio.interceptors.add(PrintLogInterceptor());
-    // _dio.interceptors.add(RspInterceptor());
+    _dio.interceptors.add(PrintLogInterceptor());
+    _dio.interceptors.add(RspInterceptor());
+    _dio.interceptors.add(tokenInterceptor);
 
     _inited = true;
   }

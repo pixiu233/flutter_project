@@ -6,7 +6,7 @@ import '../../datas/home_banner/datum.dart';
 
 class HomeViewModel {
   static Future<List<Datum>?> getBanner() async {
-    Response responese = await DioInstance.instance().get(path: "/banner/json");
+    Response responese = await DioInstance.instance().get(path: "");
     HomeBanner bannerData = HomeBanner.fromJson(responese.data);
     if (bannerData != null) {
       return bannerData.data;

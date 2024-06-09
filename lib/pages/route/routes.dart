@@ -5,6 +5,7 @@ import 'package:flutter_application_1/pages/chat/chat_page.dart';
 import 'package:flutter_application_1/pages/find/find_page.dart';
 import 'package:flutter_application_1/pages/me/me_page.dart';
 import 'package:flutter_application_1/pages/tab_page.dart';
+import 'package:flutter_application_1/pages/tinder/tinder_page.dart';
 import 'package:flutter_application_1/pages/web_view_page.dart';
 
 ///路由注册管理类
@@ -20,6 +21,9 @@ class Routes {
       //登录
       case RoutePath.login:
         return pageRoute(const LoginScreen(), settings: settings);
+      //tinder
+      case RoutePath.tinder:
+        return pageRoute(const TinderPage(), settings: settings);
       //注册
       // case RoutePath.register:
       //   return pageRoute(const RegisterPage(), settings: settings);
@@ -87,4 +91,6 @@ class RoutePath {
 
   //搜索页
   static const String search = "/search";
+  //tinder
+  static const String tinder = "/tinder";
 }

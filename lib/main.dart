@@ -5,7 +5,7 @@ import 'package:flutter_application_1/pages/route/routes.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {
-  DioInstance.instance().initDio(baseUrl: "https://www.wanandroid.com");
+  DioInstance.instance().initDio(baseUrl: "http://192.168.3.93:3000/v1/");
   runApp(const MyApp());
 }
 
