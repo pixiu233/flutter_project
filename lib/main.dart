@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 final GlobalKey<NavigatorState> globalNavigatorKey = GlobalKey();
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  DioInstance.instance().initDio(baseUrl: "http://116.205.181.242:3000/v1/");
+  DioInstance.instance().initDio(baseUrl: "http://songsikai.com:3000/v1/");
   runApp(const MyApp());
 }
 
