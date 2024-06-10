@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/apis/friends_vn.dart';
 import 'package:flutter_application_1/datas/tinder_users/datum.dart';
 import 'example_buttons.dart';
 
@@ -94,10 +95,15 @@ class _TinderSwipPageState extends State<TinderSwip> {
     );
   }
 
-  void _swipeEnd(int previousIndex, int targetIndex, SwiperActivity activity) {
+  Future<void> _swipeEnd(
+      int previousIndex, int targetIndex, SwiperActivity activity) async {
     print(activity);
     switch (activity) {
       case Swipe():
+        if (activity.direction == AxisDirection.right) {
+          String userId = (widget.candidates?[previousIndex].userId).toString();
+          var data = await FriendsModel.add_friend(userId);
+        }
         print('The card was swiped to the : ${activity.direction}');
         print('previous index: $previousIndex, target index: $targetIndex');
         break;
@@ -122,25 +128,25 @@ class _TinderSwipPageState extends State<TinderSwip> {
   Future<void> _shakeCard() async {
     const double distance = 30;
     // We can animate back and forth by chaining different animations.
-    try {
-      await controller.animateTo(
-        const Offset(-distance, 0),
-        duration: const Duration(milliseconds: 200),
-        curve: Curves.easeInOut,
-      );
-    } catch (e) {}
+    // try {
+    //   await controller.animateTo(
+    //     const Offset(-distance, 0),
+    //     duration: const Duration(milliseconds: 200),
+    //     curve: Curves.easeInOut,
+    //   );
+    // } catch (e) {}
 
-    await controller.animateTo(
-      const Offset(distance, 0),
-      duration: const Duration(milliseconds: 400),
-      curve: Curves.easeInOut,
-    );
-    // We need to animate back to the center because `animateTo` does not center
-    // the card for us.
-    await controller.animateTo(
-      const Offset(0, 0),
-      duration: const Duration(milliseconds: 200),
-      curve: Curves.easeInOut,
-    );
+    //   await controller.animateTo(
+    //     const Offset(distance, 0),
+    //     duration: const Duration(milliseconds: 400),
+    //     curve: Curves.easeInOut,
+    //   );
+    //   // We need to animate back to the center because `animateTo` does not center
+    //   // the card for us.
+    //   await controller.animateTo(
+    //     const Offset(0, 0),
+    //     duration: const Duration(milliseconds: 200),
+    //     curve: Curves.easeInOut,
+    //   );
   }
 }

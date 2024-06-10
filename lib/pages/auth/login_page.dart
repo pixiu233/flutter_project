@@ -45,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             children: <Widget>[
               Expanded(
-                  flex: 5,
+                  flex: 3,
                   child: Center(
                       child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -55,7 +55,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       //     // color: Colors.white,
                       //     // size: ScreenUtil().setSp(180.0),
                       //     ),
-                      SizedBox(width: ScreenUtil().setWidth(10.0)),
                       Text(
                         "Kainder",
                         style: TextStyle(
@@ -91,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             fontSize: 12.w,
                           ),
                         ),
-                        SizedBox(height: 15.h),
+                        SizedBox(height: 15),
                         GestureDetector(
                           onTap: () async {
                             final username = 'songsikai'; // 从界面上获取的实际用户名
@@ -106,7 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                           child: Container(
                             width: double.infinity,
-                            height: 30.h,
+                            height: 30,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
                               color: Colors.white,
@@ -116,7 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 "登录",
                                 style: TextStyle(
                                     color: Colors.black,
-                                    fontSize: 16.w,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.bold),
                               ),
                             )),

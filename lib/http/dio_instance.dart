@@ -101,6 +101,32 @@ class DioInstance {
             ));
   }
 
+  //put请求方式
+  Future<Response> put(
+      {required String path,
+      Object? data,
+      Map<String, dynamic>? queryParameters,
+      Options? options,
+      CancelToken? cancelToken}) async {
+    if (!_inited) {
+      throw Exception("you should call initDio() first!");
+    }
+    final token = await getToken();
+    // 实例化并添加Token拦截器
+    TokenInterceptor tokenInterceptor = TokenInterceptor(token);
+    _dio.interceptors.add(tokenInterceptor);
+    return await _dio.put(path,
+        data: data,
+        queryParameters: queryParameters,
+        cancelToken: cancelToken,
+        options: options ??
+            Options(
+              method: HttpMethod.PUT,
+              receiveTimeout: _defaultTimeout,
+              sendTimeout: _defaultTimeout,
+            ));
+  }
+
   BaseOptions buildBaseOptions({
     required String baseUrl,
     String? method = HttpMethod.GET,

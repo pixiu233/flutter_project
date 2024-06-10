@@ -137,7 +137,7 @@ class _HomePageState extends State<HomePage> {
   Widget _clipRRectImage() => ClipRRect(
         borderRadius: BorderRadius.circular(borderRadiusValue),
         child: Image.network(
-          "http://116.205.181.242:8888/down/XOL31PGDjfWz.png",
+          "",
           width: imageWidthHeight,
           height: imageWidthHeight,
         ),
