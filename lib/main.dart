@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
               )),
           onGenerateRoute: Routes.generateRoute,
           navigatorKey: globalNavigatorKey,
-          initialRoute: RoutePath.tab,
+          initialRoute: RoutePath.login_page,
           // home: const HomePage(),
         );
       },

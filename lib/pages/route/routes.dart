@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/pages/auth/login_page.dart';
 import 'package:flutter_application_1/pages/chat/chat_page.dart';
 import 'package:flutter_application_1/pages/find/find_page.dart';
+import 'package:flutter_application_1/pages/login/login_page.dart';
 import 'package:flutter_application_1/pages/me/me_page.dart';
 import 'package:flutter_application_1/pages/tab_page.dart';
 import 'package:flutter_application_1/pages/tinder/tinder_page.dart';
@@ -21,6 +22,9 @@ class Routes {
       //登录
       case RoutePath.login:
         return pageRoute(const LoginScreen(), settings: settings);
+      //登录表单
+      case RoutePath.login_page:
+        return pageRoute(const LoginPage(), settings: settings);
       //tinder
       case RoutePath.tinder:
         return pageRoute(const TinderPage(), settings: settings);
@@ -73,6 +77,7 @@ class RoutePath {
 
   //登录
   static const String login = "/login";
+  static const String login_page = "/login_page";
 
   //注册
   static const String register = "/register";

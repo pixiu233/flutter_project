@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/apis/login_vm.dart';
 import 'package:flutter_application_1/datas/login/data.dart';
+import 'package:flutter_application_1/pages/login/login_page.dart';
 import 'package:flutter_application_1/pages/route/RouteUtils.dart';
 import 'package:flutter_application_1/pages/route/routes.dart';
 import 'package:flutter_application_1/pages/tab_page.dart';
@@ -21,12 +22,6 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
-
-  Future<void> _saveToken(String? token) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('token', token ?? '');
-    print('Token saved successfully');
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,15 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         SizedBox(height: 15),
                         GestureDetector(
                           onTap: () async {
-                            final username = 'songsikai'; // 从界面上获取的实际用户名
-                            final password = '123456'; // 从界面上获取的实际密码
-
-                            Data loginResult =
-                                await LoginModel.login(username, password);
-                            if (loginResult != null) {
-                              await _saveToken(loginResult.token);
-                              RouteUtils.pushAndRemoveUntil(context, TabPage());
-                            }
+                            RouteUtils.push(context, LoginPage());
                           },
                           child: Container(
                             width: double.infinity,
