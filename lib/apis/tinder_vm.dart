@@ -5,7 +5,8 @@ import 'package:flutter_application_1/http/dio_instance.dart';
 
 class TinderUsersModel {
   static Future<List<Datum>?> getTinderUsers() async {
-    Response responese = await DioInstance.instance().get(path: "/auth/list");
+    Response responese =
+        await DioInstance.instance().get(path: "/friend/list_without_friends");
 
     TinderUsers tinderUserData = TinderUsers.fromJson(responese.data);
 
