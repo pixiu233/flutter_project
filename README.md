@@ -17,5 +17,18 @@
 
 ## 功能演示
 
-- [x] 🎉 登录
+- [x] 🎉 注册
   
+  ![image](https://github.com/pixiu233/flutter_project/blob/main/gif/%E6%B3%A8%E5%86%8C.gif)   
+
+- [x] 🎉 登录
+  ![image](https://github.com/pixiu233/flutter_project/blob/main/gif/%E7%99%BB%E5%BD%95.gif)   
+
+- [x] 🎉 交友
+  ![image](https://github.com/pixiu233/flutter_project/blob/main/gif/%E6%BB%91%E5%8A%A8.gif)   
+
+- [x] 🎉 轮播
+  ![image](https://github.com/pixiu233/flutter_project/blob/main/gif/%E8%BD%AE%E6%92%AD%E5%9B%BE.gif)   
+
+
+
