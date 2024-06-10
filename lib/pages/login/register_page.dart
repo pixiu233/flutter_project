@@ -1,4 +1,3 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/apis/login_vm.dart';
 import 'package:flutter_application_1/datas/siteup/data.dart';
@@ -31,31 +30,6 @@ class _LoginPageState extends State<RegisterPage> {
 
   bool cameraAccess = false;
   String? error;
-  List<CameraDescription>? cameras;
-
-  @override
-  void initState() {
-    getCameras();
-    super.initState();
-  }
-
-  Future<void> getCameras() async {
-    try {
-      await window.navigator.mediaDevices!
-          .getUserMedia({'video': true, 'audio': false});
-      setState(() {
-        cameraAccess = true;
-      });
-      final cameras = await availableCameras();
-      setState(() {
-        this.cameras = cameras;
-      });
-    } on DomException catch (e) {
-      setState(() {
-        error = '${e.name}: ${e.message}';
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
