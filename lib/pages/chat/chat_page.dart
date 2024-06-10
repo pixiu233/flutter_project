@@ -44,6 +44,15 @@ class _ChatPageState extends State<ChatPage> {
     }
   }
 
+  void delete_friends(id) async {
+    try {
+      await FriendsModel.delete_friend(id);
+      initData();
+    } on DioError catch (e) {
+      print('Error fetching : $e');
+    }
+  }
+
   void doNothing() {}
   @override
   Widget build(BuildContext context) {
@@ -70,11 +79,12 @@ class _ChatPageState extends State<ChatPage> {
                               label: '同意',
                             ),
                           SlidableAction(
-                            onPressed: null,
+                            onPressed: (_) => delete_friends(
+                                dataList?[index].receiver?.userId),
                             backgroundColor: Color(0xFFFE4A49),
                             foregroundColor: Colors.white,
                             icon: Icons.delete,
-                            label: '拒绝',
+                            label: '删除',
                           ),
                         ],
                       ),

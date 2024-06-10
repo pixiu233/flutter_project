@@ -10,7 +10,6 @@ class FriendsModel {
   static Future<dynamic> add_friend(
     String receiverId,
   ) async {
-    // 准备登录请求的参数，这里假设使用POST方法，并且服务器期望的数据格式为json
     Map<String, dynamic> data = {
       "receiverId": receiverId,
     };
@@ -25,8 +24,6 @@ class FriendsModel {
   }
 
   static Future<dynamic> get_not_yet_friend() async {
-    // 准备登录请求的参数，这里假设使用POST方法，并且服务器期望的数据格式为json
-
     Response response =
         await DioInstance.instance().post(path: "/friend/get_not_yet_friend");
 
@@ -37,10 +34,20 @@ class FriendsModel {
   }
 
   static Future<dynamic> confirm_friend(receiverId) async {
+    Response response =
+        await DioInstance.instance().put(path: "/friend/$receiverId/confirm");
+
+    CheckFriends responseData = CheckFriends.fromJson(response.data);
+    if (responseData != null) {
+      return responseData.data;
+    }
+  }
+
+  static Future<dynamic> delete_friend(receiverId) async {
     // 准备登录请求的参数，这里假设使用POST方法，并且服务器期望的数据格式为json
 
     Response response =
-        await DioInstance.instance().put(path: "/friend/$receiverId/confirm");
+        await DioInstance.instance().put(path: "/friend/$receiverId/delete");
 
     CheckFriends responseData = CheckFriends.fromJson(response.data);
     if (responseData != null) {
