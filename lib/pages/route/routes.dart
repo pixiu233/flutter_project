@@ -4,6 +4,7 @@ import 'package:flutter_application_1/pages/auth/login_page.dart';
 import 'package:flutter_application_1/pages/chat/chat_page.dart';
 import 'package:flutter_application_1/pages/find/find_page.dart';
 import 'package:flutter_application_1/pages/login/login_page.dart';
+import 'package:flutter_application_1/pages/login/register_page.dart';
 import 'package:flutter_application_1/pages/me/me_page.dart';
 import 'package:flutter_application_1/pages/tab_page.dart';
 import 'package:flutter_application_1/pages/tinder/tinder_page.dart';
@@ -29,8 +30,8 @@ class Routes {
       case RoutePath.tinder:
         return pageRoute(const TinderPage(), settings: settings);
       //注册
-      // case RoutePath.register:
-      //   return pageRoute(const RegisterPage(), settings: settings);
+      case RoutePath.register:
+        return pageRoute(const RegisterPage(), settings: settings);
       //消息
       case RoutePath.my_collects:
         return pageRoute(const ChatPage(), settings: settings);

@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/apis/login_vm.dart';
-import 'package:flutter_application_1/datas/login/data.dart';
-import 'package:flutter_application_1/pages/login/register_page.dart';
+import 'package:flutter_application_1/datas/siteup/data.dart';
 import 'package:flutter_application_1/pages/route/RouteUtils.dart';
 import 'package:flutter_application_1/pages/tab_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _LoginPageState();
   }
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends State<RegisterPage> {
   final GlobalKey _formKey = GlobalKey<FormState>();
-  late String _username, _password;
+  late String _username, _password, _repassword;
   bool _isObscure = true;
   Color _eyeColor = Colors.grey;
   final List _loginMethod = [
@@ -55,13 +53,16 @@ class _LoginPageState extends State<LoginPage> {
             buildTitleLine(), // 标题下面的下滑线
             const SizedBox(height: 50),
             buildEmailTextField(), // 输入邮箱
-            const SizedBox(height: 30),
-            buildPasswordTextField(context), // 输入密码
-            buildForgetPasswordText(context), // 忘记密码
+            const SizedBox(height: 15),
+            buildPasswordTextField(context, '密码', (v) => _password = v), // 输入密码
+            const SizedBox(height: 15),
+            buildPasswordTextField(
+                context, '确认密码', (v) => _repassword = v), // 再次输入密码
+            // buildForgetPasswordText(context), // 忘记密码
             const SizedBox(height: 50),
             buildLoginButton(context), // 登录按钮
             const SizedBox(height: 30),
-            buildRegisterText(context), // 注册
+            // buildRegisterText(context), // 注册
           ],
         ),
       ),
@@ -79,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
             GestureDetector(
               child: const Text('点击注册', style: TextStyle(color: Colors.green)),
               onTap: () {
-                RouteUtils.push(context, RegisterPage());
+                print("点击注册");
               },
             )
           ],
@@ -100,7 +101,7 @@ class _LoginPageState extends State<LoginPage> {
                       //TODO: 第三方登录方法
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                            content: Text('${item['title']}登录'),
+                            content: Text('${item['title']}注册'),
                             action: SnackBarAction(
                               label: '取消',
                               onPressed: () {},
@@ -132,7 +133,7 @@ class _LoginPageState extends State<LoginPage> {
               shape: MaterialStateProperty.all(const StadiumBorder(
                   side: BorderSide(style: BorderStyle.none)))),
           child: Text(
-            '登录',
+            '注册',
             style: TextStyle(fontSize: 32, color: Colors.black),
           ),
           onPressed: () async {
@@ -140,7 +141,8 @@ class _LoginPageState extends State<LoginPage> {
             if ((_formKey.currentState as FormState).validate()) {
               (_formKey.currentState as FormState).save();
               if (_username != null && _password != null) {
-                Data loginResult = await LoginModel.login(_username, _password);
+                Data loginResult =
+                    await LoginModel.signup(_username, _password, _repassword);
                 await _saveToken(loginResult.token);
                 if (loginResult != null) {
                   await _saveToken(loginResult.token);
@@ -171,12 +173,12 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget buildPasswordTextField(BuildContext context) {
+  Widget buildPasswordTextField(BuildContext context, text, onPasswordChanged) {
     return TextFormField(
         obscureText: false, // 是否显示文字
         onSaved: (v) {
           if (v != null) {
-            _password = v;
+            onPasswordChanged(v);
           }
         },
         validator: (v) {
@@ -185,7 +187,7 @@ class _LoginPageState extends State<LoginPage> {
           }
         },
         decoration: InputDecoration(
-            labelText: "密码",
+            labelText: text,
             suffixIcon: IconButton(
               icon: Icon(
                 Icons.remove_red_eye,
@@ -227,7 +229,7 @@ class _LoginPageState extends State<LoginPage> {
     return const Padding(
         padding: EdgeInsets.all(8),
         child: Text(
-          '登录',
+          '注册',
           style: TextStyle(fontSize: 42, color: Colors.black),
         ));
   }
