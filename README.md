@@ -1,6 +1,6 @@
 # flutter仿Tinder的Kainder的demo
 
-线上地址：[kainder](http://www.songsikai.com/)
+线上地址：[kainder](http://www.songsikai.com/) 测试账号songsikai 123456
 目前支持h5移动端平台，前端采用flutter+dio,后端采用nest.js+typeorm+mysql全栈实现了以下功能：
 
 > * Jwt鉴权，Token令牌身份判断。
