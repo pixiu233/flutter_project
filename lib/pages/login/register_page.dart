@@ -1,9 +1,12 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/apis/login_vm.dart';
 import 'package:flutter_application_1/datas/siteup/data.dart';
 import 'package:flutter_application_1/pages/route/RouteUtils.dart';
 import 'package:flutter_application_1/pages/tab_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'dart:html';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -19,24 +22,39 @@ class _LoginPageState extends State<RegisterPage> {
   late String _username, _password, _repassword;
   bool _isObscure = true;
   Color _eyeColor = Colors.grey;
-  final List _loginMethod = [
-    {
-      "title": "facebook",
-      "icon": Icons.facebook,
-    },
-    {
-      "title": "google",
-      "icon": Icons.fiber_dvr,
-    },
-    {
-      "title": "twitter",
-      "icon": Icons.account_balance,
-    },
-  ];
+
   Future<void> _saveToken(String? token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('token', token ?? '');
     print('Token saved successfully');
+  }
+
+  bool cameraAccess = false;
+  String? error;
+  List<CameraDescription>? cameras;
+
+  @override
+  void initState() {
+    getCameras();
+    super.initState();
+  }
+
+  Future<void> getCameras() async {
+    try {
+      await window.navigator.mediaDevices!
+          .getUserMedia({'video': true, 'audio': false});
+      setState(() {
+        cameraAccess = true;
+      });
+      final cameras = await availableCameras();
+      setState(() {
+        this.cameras = cameras;
+      });
+    } on DomException catch (e) {
+      setState(() {
+        error = '${e.name}: ${e.message}';
+      });
+    }
   }
 
   @override
@@ -59,6 +77,8 @@ class _LoginPageState extends State<RegisterPage> {
             buildPasswordTextField(
                 context, '确认密码', (v) => _repassword = v), // 再次输入密码
             // buildForgetPasswordText(context), // 忘记密码
+            const SizedBox(height: 15),
+
             const SizedBox(height: 50),
             buildLoginButton(context), // 登录按钮
             const SizedBox(height: 30),
@@ -86,30 +106,6 @@ class _LoginPageState extends State<RegisterPage> {
           ],
         ),
       ),
-    );
-  }
-
-  Widget buildOtherMethod(context) {
-    return ButtonBar(
-      alignment: MainAxisAlignment.center,
-      children: _loginMethod
-          .map((item) => Builder(builder: (context) {
-                return IconButton(
-                    icon: Icon(item['icon'],
-                        color: Theme.of(context).iconTheme.color),
-                    onPressed: () {
-                      //TODO: 第三方登录方法
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                            content: Text('${item['title']}注册'),
-                            action: SnackBarAction(
-                              label: '取消',
-                              onPressed: () {},
-                            )),
-                      );
-                    });
-              }))
-          .toList(),
     );
   }
 
@@ -226,6 +222,15 @@ class _LoginPageState extends State<RegisterPage> {
   }
 
   Widget buildTitle() {
+    return const Padding(
+        padding: EdgeInsets.all(8),
+        child: Text(
+          '注册',
+          style: TextStyle(fontSize: 42, color: Colors.black),
+        ));
+  }
+
+  Widget buildCamera(context) {
     return const Padding(
         padding: EdgeInsets.all(8),
         child: Text(

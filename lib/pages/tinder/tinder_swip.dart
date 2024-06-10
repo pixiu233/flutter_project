@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:math';
 
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,6 +26,20 @@ class _TinderSwipPageState extends State<TinderSwip> {
       _shakeCard();
     });
     super.initState();
+  }
+
+  final List<String> tabActiveIcons = [
+    "images/c/1.jpg",
+    "images/c/2.jpg",
+    "images/c/3.jpg",
+    "images/c/4.jpg",
+    "images/c/5.jpg",
+    "images/c/6.jpg",
+    "images/c/7.jpg",
+  ];
+  String getRandomIcon() {
+    final random = Random();
+    return tabActiveIcons[random.nextInt(tabActiveIcons.length)];
   }
 
   @override
@@ -59,10 +74,18 @@ class _TinderSwipPageState extends State<TinderSwip> {
                   cardCount: widget.candidates?.length ?? 0,
                   cardBuilder: (BuildContext context, int index) {
                     return Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(index > 6
+                              ? tabActiveIcons[(index / 7).toInt()]
+                              : tabActiveIcons[index]), // 使用正确的图片路径替换
+                          fit: BoxFit.cover, // 根据需要调整图片的缩放方式
+                        ),
+                      ),
                       alignment: Alignment.center,
                       child: Text(widget.candidates?[index]?.username ??
                           'Unknown'), // 添加空检查
-                      color: CupertinoColors.activeBlue,
+                      // color: const Color.fromARGB(255, 40, 43, 45),
                     );
                   },
                 ),

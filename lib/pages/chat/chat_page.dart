@@ -18,6 +18,16 @@ class ChatPage extends StatefulWidget {
   }
 }
 
+final List<String> tabActiveIcons = [
+  "images/c/1.jpg",
+  "images/c/2.jpg",
+  "images/c/3.jpg",
+  "images/c/4.jpg",
+  "images/c/5.jpg",
+  "images/c/6.jpg",
+  "images/c/7.jpg",
+];
+
 class _ChatPageState extends State<ChatPage> {
   List<Datum>? dataList;
 
@@ -164,7 +174,7 @@ class _ChatPageState extends State<ChatPage> {
         .format(dataList?[index].receiver!.createTime ?? DateTime.now());
     return ListTile(
       // contentPadding: EdgeInsets.only(left: 16.0),
-      leading: Icon(Icons.android),
+      leading: _clipRRectImage(index),
       title: Row(
         children: [
           Text(dataList?[index].receiver?.username ?? ''),
@@ -186,12 +196,12 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
-  Widget _clipRRectImage() => ClipRRect(
+  Widget _clipRRectImage(index) => ClipRRect(
         borderRadius: BorderRadius.circular(50),
-        child: Image.network(
-          "",
-          width: 10,
-          height: 10,
+        child: Image.asset(
+          tabActiveIcons[index % tabActiveIcons.length],
+          width: 40,
+          height: 40,
         ),
       );
   Widget _buildListItemContent(index) {

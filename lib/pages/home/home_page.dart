@@ -13,6 +13,15 @@ const double borderRadiusValue = 6.0;
 const double imageWidthHeight = 30.0;
 const double textStyleFontSize = 18.0;
 const double spacing = 5.0;
+final List<String> tabActiveIcons = [
+  "images/c/1.jpg",
+  "images/c/2.jpg",
+  "images/c/3.jpg",
+  "images/c/4.jpg",
+  "images/c/5.jpg",
+  "images/c/6.jpg",
+  "images/c/7.jpg",
+];
 
 // 可能放在一个公共样式文件或类中
 final titleStyle = TextStyle(fontSize: textStyleFontSize);
@@ -37,7 +46,11 @@ class HomePage extends StatefulWidget {
 // 不被遮住的地方是SafeArea区域
 //拿到homepage里面的成员变量
 class _HomePageState extends State<HomePage> {
-  List<Datum>? bannerList;
+  List? bannerList = [
+    "images/c/3.jpg",
+    "images/c/4.jpg",
+    "images/c/5.jpg",
+  ];
   @override
   void initState() {
     super.initState();
@@ -65,7 +78,7 @@ class _HomePageState extends State<HomePage> {
           child: ListView.builder(
             itemCount: 10,
             itemBuilder: (context, index) {
-              return _listItemView();
+              return _listItemView(index);
             },
           ),
         )
@@ -83,8 +96,8 @@ class _HomePageState extends State<HomePage> {
                 height: 150.h,
                 width: double.infinity,
                 margin: EdgeInsets.all(15.w),
-                child: Image.network(
-                  bannerList?[index].imagePath ?? '',
+                child: Image.asset(
+                  bannerList?[index] ?? '',
                   fit: BoxFit.fill,
                 ),
               );
@@ -94,15 +107,15 @@ class _HomePageState extends State<HomePage> {
             control: const SwiperControl()));
   }
 
-  Widget _listItemView() {
+  Widget _listItemView(index) {
     return GestureDetector(
         onTap: () {
           Navigator.pushNamed(context, RoutePath.web_view);
         },
-        child: _buildListItemContent());
+        child: _buildListItemContent(index));
   }
 
-  Widget _buildListItemContent() {
+  Widget _buildListItemContent(index) {
     return Container(
       margin: EdgeInsets.symmetric(
           horizontal: paddingValue, vertical: paddingValue),
@@ -111,7 +124,7 @@ class _HomePageState extends State<HomePage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _headerRow(),
+          _headerRow(index),
           SizedBox(height: spacing),
           Text('标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题'),
           SizedBox(height: spacing),
@@ -121,9 +134,9 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _headerRow() => Row(
+  Widget _headerRow(index) => Row(
         children: [
-          _clipRRectImage(),
+          _clipRRectImage(index),
           SizedBox(width: spacing),
           Text('作者', style: authorStyle),
           SizedBox(width: spacing),
@@ -134,10 +147,10 @@ class _HomePageState extends State<HomePage> {
         ],
       );
 
-  Widget _clipRRectImage() => ClipRRect(
+  Widget _clipRRectImage(index) => ClipRRect(
         borderRadius: BorderRadius.circular(borderRadiusValue),
-        child: Image.network(
-          "",
+        child: Image.asset(
+          tabActiveIcons[index % tabActiveIcons.length],
           width: imageWidthHeight,
           height: imageWidthHeight,
         ),
