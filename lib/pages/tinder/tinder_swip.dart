@@ -74,19 +74,44 @@ class _TinderSwipPageState extends State<TinderSwip> {
                   cardCount: widget.candidates?.length ?? 0,
                   cardBuilder: (BuildContext context, int index) {
                     return Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(index > 6
-                              ? tabActiveIcons[(index / 7).toInt()]
-                              : tabActiveIcons[index]), // 使用正确的图片路径替换
-                          fit: BoxFit.cover, // 根据需要调整图片的缩放方式
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(index > 6
+                                ? tabActiveIcons[(index / 7).toInt()]
+                                : tabActiveIcons[index]), // 使用正确的图片路径替换
+                            fit: BoxFit.cover, // 根据需要调整图片的缩放方式
+                          ),
                         ),
-                      ),
-                      alignment: Alignment.center,
-                      child: Text(widget.candidates?[index]?.username ??
-                          'Unknown'), // 添加空检查
-                      // color: const Color.fromARGB(255, 40, 43, 45),
-                    );
+                        alignment: Alignment.bottomLeft,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(left: 10),
+                              padding: EdgeInsets.all(
+                                6.0,
+                              ),
+                              decoration: BoxDecoration(
+                                // 添加这一部分来设置圆角
+                                color: Color.fromARGB(215, 139, 139, 139),
+                                borderRadius: BorderRadius.circular(
+                                    7.0), // 设置圆角大小，数字越大圆角越明显
+                              ),
+                              child: Text(
+                                widget.candidates?[index]?.username ??
+                                    'Unknown',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 14),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            )
+                          ],
+                        )
+
+                        // color: const Color.fromARGB(255, 40, 43, 45),
+                        );
                   },
                 ),
               ),
