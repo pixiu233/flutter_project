@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/datas/tinder_users/datum.dart';
 import 'package:flutter_application_1/pages/tinder/tinder_swip.dart';
-import 'package:flutter_application_1/pages/tinder/tinder_vm.dart';
+import 'package:flutter_application_1/apis/tinder_vm.dart';
 
 class TinderPage extends StatefulWidget {
   const TinderPage({super.key});

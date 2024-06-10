@@ -1,10 +1,12 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/apis/friends_vn.dart';
 import 'package:flutter_application_1/datas/not_yet_friends/datum.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
@@ -27,6 +29,8 @@ class _ChatPageState extends State<ChatPage> {
   void initData() async {
     try {
       List<Datum> data = await FriendsModel.get_not_yet_friend();
+      //遍历，把isConfired为true的放在数据最前面
+      data.sort((a, b) => a.isConfirmed! ? -1 : 1);
       setState(() {
         dataList = data; // 更新状态
       });
@@ -53,7 +57,24 @@ class _ChatPageState extends State<ChatPage> {
     }
   }
 
-  void doNothing() {}
+  void _onRefresh() async {
+    // monitor network fetch
+    initData();
+    // if failed,use refreshFailed()
+    _refreshController.refreshCompleted();
+  }
+
+  void _onLoading() async {
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use loadFailed(),if no data return,use LoadNodata()
+    // items.add((items.length + 1).toString());
+    if (mounted) setState(() {});
+    _refreshController.loadComplete();
+  }
+
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,6 +82,33 @@ class _ChatPageState extends State<ChatPage> {
       child: Column(
         children: [
           Expanded(
+              child: SmartRefresher(
+            controller: _refreshController,
+            enablePullDown: true,
+            enablePullUp: true,
+            header: WaterDropHeader(),
+            footer: CustomFooter(
+              builder: (context, mode) {
+                Widget body;
+                if (mode == LoadStatus.idle) {
+                  body = Text("上拉加载");
+                } else if (mode == LoadStatus.loading) {
+                  body = CupertinoActivityIndicator();
+                } else if (mode == LoadStatus.failed) {
+                  body = Text("加载失败！点击重试！");
+                } else if (mode == LoadStatus.canLoading) {
+                  body = Text("松手,加载更多!");
+                } else {
+                  body = Text("没有更多数据了!");
+                }
+                return Container(
+                  height: 55.0,
+                  child: Center(child: body),
+                );
+              },
+            ),
+            onRefresh: _onRefresh,
+            onLoading: _onLoading,
             child: ListView.builder(
                 itemBuilder: (_, index) => Slidable(
                       key: const ValueKey(0),
@@ -101,7 +149,7 @@ class _ChatPageState extends State<ChatPage> {
                 itemCount: dataList != null && dataList!.length > 0
                     ? dataList!.length
                     : 0),
-          ),
+          )),
         ],
       ),
     ));
